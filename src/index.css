@@ -1,0 +1,55 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background-color: #b8874a;
+  color: #101826;
+}
+
+.input {
+  width: 100%;
+  border: 1px solid rgba(91, 100, 114, 0.2);
+  border-radius: 0.5rem;
+  padding: 0.65rem 1rem;
+  font-size: 0.875rem;
+  outline: none;
+  background: white;
+  color: #101826;
+}
+.input:focus {
+  border-color: #b8874a;
+}
+
+.blueprint-bg {
+  background-image: linear-gradient(rgba(184, 135, 74, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(184, 135, 74, 0.1) 1px, transparent 1px);
+  background-size: 44px 44px;
+}
+
+/* Focus visibility for accessibility */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid #b8874a;
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

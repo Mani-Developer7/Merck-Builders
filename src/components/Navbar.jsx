@@ -18,7 +18,7 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between h-20">
         <NavLink to="/" className="flex items-center gap-3">
           <span className="font-display text-2xl tracking-tight text-stone">
-            MERCK <span className="text-brass">BUILDERS</span>
+            Marjan <span className="text-brass">Classic</span>
           </span>
         </NavLink>
 

@@ -5,7 +5,7 @@ const Footer = () => (
     <div className="max-w-7xl mx-auto px-6 py-16 grid gap-12 md:grid-cols-4">
       <div>
         <span className="font-display text-2xl text-stone">
-          MERCK <span className="text-brass">BUILDERS</span>
+          Marjan <span className="text-brass">Classic</span>
         </span>
         <p className="mt-4 text-sm leading-relaxed text-stone/60">
           Mall &amp; Residency — Sector 16-A, Shah Latif Town, Karachi. Building landmark
@@ -28,7 +28,7 @@ const Footer = () => (
         <ul className="space-y-2 text-sm text-stone/70">
           <li>Sector 16-A, Shah Latif Town, Karachi</li>
           <li>+92 300 0000000</li>
-          <li>info@merckbuilders.com</li>
+          <li>info@marjanclassic.com</li>
         </ul>
       </div>
 

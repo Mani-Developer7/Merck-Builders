@@ -16,10 +16,8 @@ const Navbar = () => {
   return (
     <header className="sticky top-0 z-50 bg-ink/95 backdrop-blur border-b border-brass/20">
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between h-20">
-        <NavLink to="/" className="flex items-center gap-3">
-          <span className="font-display text-2xl tracking-tight text-stone">
-            Marjan <span className="text-brass">Classic</span>
-          </span>
+        <NavLink to="/" className="flex">
+          <img src="/logo.png" alt="" className="h-20" />
         </NavLink>
 
         <nav className="hidden md:flex items-center gap-9 font-body text-sm tracking-wide">
@@ -28,8 +26,7 @@ const Navbar = () => {
               key={l.to}
               to={l.to}
               className={({ isActive }) =>
-                `uppercase tracking-widest text-xs transition-colors ${
-                  isActive ? 'text-brass' : 'text-stone/70 hover:text-stone'
+                `uppercase tracking-widest text-xs transition-colors ${isActive ? 'text-brass' : 'text-stone/70 hover:text-stone'
                 }`
               }
             >

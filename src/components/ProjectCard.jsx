@@ -104,9 +104,9 @@ const ProjectCard = ({ project }) => {
         <p className="text-sm text-stone/70 mt-3 line-clamp-2">{project.shortDescription}</p>
 
         <div className="flex items-center justify-between mt-5 pt-4 border-t border-brass/10">
-          <div className="font-mono text-sm text-brass">
+          {/* <div className="font-mono text-sm text-brass">
             {project.priceStartingFrom ? `From ${project.priceStartingFrom}` : 'Price on request'}
-          </div>
+          </div> */}
           <label className="flex items-center gap-1.5 text-xs text-stone/50 cursor-pointer select-none">
             <input
               type="checkbox"

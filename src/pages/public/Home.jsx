@@ -88,7 +88,7 @@ const Home = () => {
       </section>
 
       {/* EMI Calculator */}
-      <section className="max-w-7xl mx-auto px-6 py-24 grid md:grid-cols-2 gap-12 items-start">
+     {/* <section className="max-w-7xl mx-auto px-6 py-24 grid md:grid-cols-2 gap-12 items-start">
         <Reveal>
           <p className="text-clay uppercase tracking-widest text-xs font-mono mb-2">Smart Tools</p>
           <h2 className="font-display text-3xl md:text-4xl text-ink mb-4">Plan Your Investment</h2>
@@ -100,19 +100,9 @@ const Home = () => {
         <Reveal delay={0.15}>
           <EMICalculator />
         </Reveal>
-      </section>
+      </section> */}
 
-      {/* Interactive Map */}
-      <section className="max-w-7xl mx-auto px-6 py-24">
-        <Reveal>
-          <p className="text-brass uppercase tracking-widest text-xs font-mono mb-2">Location</p>
-          <h2 className="font-display text-3xl md:text-4xl text-ink mb-8">Find Us in Karachi</h2>
-        </Reveal>
-        <Reveal delay={0.1}>
-          <MapEmbed />
-        </Reveal>
-      </section>
-
+  
       {/* Trust Section */}
       <section className="bg-ink text-stone py-24">
         <div className="max-w-7xl mx-auto px-6">
@@ -164,6 +154,17 @@ const Home = () => {
           >
             Book a Visit
           </Link>
+        </Reveal>
+      </section>
+
+      {/* Interactive Map */}
+      <section className="max-w-7xl mx-auto px-6 py-24">
+        <Reveal>
+          <p className="text-brass uppercase tracking-widest text-xs font-mono mb-2">Location</p>
+          <h2 className="font-display text-3xl md:text-4xl text-ink mb-8">Find Us in Karachi</h2>
+        </Reveal>
+        <Reveal delay={0.1}>
+          <MapEmbed />
         </Reveal>
       </section>
     </div>

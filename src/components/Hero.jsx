@@ -177,12 +177,12 @@ const Hero = () => {
             Search
           </button>
         </form>
-
+{/* 
         <div className="hero-fade grid grid-cols-3 gap-6 mt-12 max-w-md">
           <Counter end={1000} suffix="+" label="Homes Delivered" />
           <Counter end={500} suffix="+" label="Happy Clients" />
           <Counter end={10} suffix="+" label="Projects" />
-        </div>
+        </div> */}
       </div>
 
       {/* Slider controls */}

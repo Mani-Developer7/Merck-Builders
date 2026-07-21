@@ -25,7 +25,7 @@ const AdminLogin = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-700 flex items-center justify-center px-6">
+    <div className="min-h-screen bg-ink flex items-center justify-center px-6">
       <div className="w-full max-w-sm">
         <div className="text-center mb-8">
           <img src="/logo.png" alt="" className="h-[120px] ml-[120px]"/>

@@ -20,7 +20,7 @@ const AdminLayout = () => {
       <aside className="w-64 bg-ink text-stone flex flex-col">
         <div className="p-6 border-b border-brass/20">
           <span className="font-display text-xl">
-            Marjan <span className="text-brass">Classic</span>
+            Merck <span className="text-brass">Builders</span>
           </span>
           <p className="text-stone/40 text-[11px] uppercase tracking-widest mt-1">Admin</p>
         </div>

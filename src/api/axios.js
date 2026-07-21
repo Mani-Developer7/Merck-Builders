@@ -196,6 +196,64 @@ const seedIfEmpty = () => {
       },
     ]);
   }
+
+  if (!localStorage.getItem('db_banners')) {
+    const now = new Date().toISOString();
+    write('db_banners', [
+      {
+        _id: uid(),
+        eyebrow: 'Sector 16-A · Shah Latif Town · Karachi',
+        title: 'Invest Today, Live Luxuriously with',
+        highlight: 'Marjan Classic',
+        text: 'Step into a world where smart investment meets elevated living — crafted for long-term value and a lifestyle you truly deserve.',
+        image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1920&auto=format&fit=crop',
+        order: 1,
+        active: true,
+        createdAt: now,
+      },
+      {
+        _id: uid(),
+        eyebrow: 'Mall & Residency',
+        title: 'Find the Home You\u2019ve',
+        highlight: 'Always Dreamed Of',
+        text: 'Spaces designed for modern families, offering peace, convenience, and lasting satisfaction in the heart of Karachi.',
+        image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1920&auto=format&fit=crop',
+        order: 2,
+        active: true,
+        createdAt: now,
+      },
+      {
+        _id: uid(),
+        eyebrow: 'Retail · Residences · Community',
+        title: 'A Landmark Address in',
+        highlight: 'the Heart of Karachi',
+        text: 'Where retail energy and residential calm share one address — thoughtfully planned to match the way you want to live.',
+        image: 'https://images.unsplash.com/photo-1519567241046-7f570eee3ce6?q=80&w=1920&auto=format&fit=crop',
+        order: 3,
+        active: true,
+        createdAt: now,
+      },
+      {
+        _id: uid(),
+        eyebrow: 'Book Your Visit Today',
+        title: 'Step Into Your Perfect',
+        highlight: 'Space With Us',
+        text: 'Whether you\u2019re upgrading your lifestyle or securing your first investment, our projects deliver comfort, style, and lasting value.',
+        image: 'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?q=80&w=1920&auto=format&fit=crop',
+        order: 4,
+        active: true,
+        createdAt: now,
+      },
+    ]);
+  }
+
+  if (!localStorage.getItem('db_offer')) {
+    write('db_offer', {
+      text: '🎉 Limited-Time Offer — Book now with a flexible 3-year payment plan!',
+      link: '/contact',
+      enabled: true,
+    });
+  }
 };
 
 seedIfEmpty();
@@ -271,6 +329,22 @@ const handlers = {
     let list = read('db_careers', []);
     if (params?.isOpen !== undefined) list = list.filter((c) => c.isOpen === (params.isOpen === 'true' || params.isOpen === true));
     return ok([...list].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)));
+  },
+
+  async 'GET /banners'(_, params) {
+    let list = read('db_banners', []);
+    if (params?.active !== undefined) list = list.filter((b) => b.active === (params.active === 'true' || params.active === true));
+    return ok([...list].sort((a, b) => (a.order ?? 0) - (b.order ?? 0)));
+  },
+
+  async 'GET /offer'() {
+    return ok(read('db_offer', { text: '', link: '', enabled: false }));
+  },
+
+  async 'PUT /offer'(body) {
+    const current = { text: body.text || '', link: body.link || '', enabled: body.enabled !== 'false' && body.enabled !== false };
+    write('db_offer', current);
+    return ok(current);
   },
 
   async 'POST /projects'(body) {
@@ -352,6 +426,25 @@ const handlers = {
     write('db_careers', list);
     return ok(item, 201);
   },
+
+  async 'POST /banners'(body) {
+    const list = read('db_banners', []);
+    if (!body.image) return fail('Banner image is required');
+    const item = {
+      _id: uid(),
+      eyebrow: body.eyebrow || '',
+      title: body.title,
+      highlight: body.highlight || '',
+      text: body.text || '',
+      image: body.image,
+      order: body.order ? Number(body.order) : list.length + 1,
+      active: body.active !== 'false' && body.active !== false,
+      createdAt: new Date().toISOString(),
+    };
+    list.push(item);
+    write('db_banners', list);
+    return ok(item, 201);
+  },
 };
 
 // GET single-item + PUT + DELETE handled generically per collection below
@@ -360,6 +453,7 @@ const collections = {
   blogs: 'db_blogs',
   gallery: 'db_gallery',
   careers: 'db_careers',
+  banners: 'db_banners',
 };
 
 const getSingle = (coll, idOrSlug) => {
@@ -402,6 +496,10 @@ const updateItem = async (coll, id, body) => {
   if (coll === 'careers') {
     if (body.requirements) current.requirements = JSON.parse(body.requirements);
     if (body.isOpen !== undefined) current.isOpen = body.isOpen !== 'false' && body.isOpen !== false;
+  }
+  if (coll === 'banners') {
+    if (body.active !== undefined) current.active = body.active !== 'false' && body.active !== false;
+    if (body.order) current.order = Number(body.order);
   }
 
   list[idx] = current;
@@ -458,6 +556,9 @@ const api = {
   async put(url, data) {
     const clean = url.split('?')[0];
     const body = await parseBody(data);
+
+    if (clean === '/offer') return handlers['PUT /offer'](body);
+
     const parts = parsePath(clean);
     if (parts.length === 2 && collections[parts[0]]) {
       return updateItem(parts[0], parts[1], body);

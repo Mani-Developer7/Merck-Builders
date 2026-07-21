@@ -12,7 +12,7 @@ import TestimonialSlider from '../../components/TestimonialSlider';
 import MapEmbed from '../../components/MapEmbed';
 import BeforeAfterSlider from '../../components/BeforeAfterSlider';
 
-// const partnerLogos = ['NBP', 'HBL Bank', 'Meezan Bank', 'UBL', 'Askari Bank'];
+const partnerLogos = ['NBP', 'HBL Bank', 'Meezan Bank', 'UBL', 'Askari Bank'];
 const awards = ['Best Mixed-Use Development 2024', 'Karachi Real Estate Excellence Award', 'ISO 9001 Certified'];
 
 const Home = () => {
@@ -88,7 +88,7 @@ const Home = () => {
       </section>
 
       {/* EMI Calculator */}
-      {/* <section className="max-w-7xl mx-auto px-6 py-24 grid md:grid-cols-2 gap-12 items-start">
+      <section className="max-w-7xl mx-auto px-6 py-24 grid md:grid-cols-2 gap-12 items-start">
         <Reveal>
           <p className="text-clay uppercase tracking-widest text-xs font-mono mb-2">Smart Tools</p>
           <h2 className="font-display text-3xl md:text-4xl text-ink mb-4">Plan Your Investment</h2>
@@ -100,8 +100,18 @@ const Home = () => {
         <Reveal delay={0.15}>
           <EMICalculator />
         </Reveal>
-      </section> */}
+      </section>
 
+      {/* Interactive Map */}
+      <section className="max-w-7xl mx-auto px-6 py-24">
+        <Reveal>
+          <p className="text-brass uppercase tracking-widest text-xs font-mono mb-2">Location</p>
+          <h2 className="font-display text-3xl md:text-4xl text-ink mb-8">Find Us in Karachi</h2>
+        </Reveal>
+        <Reveal delay={0.1}>
+          <MapEmbed />
+        </Reveal>
+      </section>
 
       {/* Trust Section */}
       <section className="bg-ink text-stone py-24">
@@ -114,8 +124,15 @@ const Home = () => {
             <TestimonialSlider />
           </Reveal>
 
-          {/* 
-           */}
+          <Reveal delay={0.2}>
+            <div className="mt-20 flex flex-wrap justify-center gap-x-12 gap-y-6 opacity-70">
+              {partnerLogos.map((logo) => (
+                <span key={logo} className="font-display text-lg text-stone/50">
+                  {logo}
+                </span>
+              ))}
+            </div>
+          </Reveal>
 
           <Reveal delay={0.25}>
             <div className="mt-14 grid sm:grid-cols-3 gap-4 max-w-3xl mx-auto">
@@ -147,19 +164,6 @@ const Home = () => {
           >
             Book a Visit
           </Link>
-        </Reveal>
-      </section>
-
-
-
-      {/* Interactive Map */}
-      <section className="max-w-7xl mx-auto px-6 py-24">
-        <Reveal>
-          <p className="text-brass uppercase tracking-widest text-xs font-mono mb-2">Location</p>
-          <h2 className="font-display text-3xl md:text-4xl text-ink mb-8">Find Us in Karachi</h2>
-        </Reveal>
-        <Reveal delay={0.1}>
-          <MapEmbed />
         </Reveal>
       </section>
     </div>

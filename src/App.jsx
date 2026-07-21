@@ -21,6 +21,8 @@ import AdminBlogs from './pages/admin/AdminBlogs';
 import AdminBlogForm from './pages/admin/AdminBlogForm';
 import AdminGallery from './pages/admin/AdminGallery';
 import AdminCareers from './pages/admin/AdminCareers';
+import AdminBanners from './pages/admin/AdminBanners';
+import AdminOfferBanner from './pages/admin/AdminOfferBanner';
 import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
@@ -59,6 +61,8 @@ function App() {
           <Route path="blogs/:id/edit" element={<AdminBlogForm />} />
           <Route path="gallery" element={<AdminGallery />} />
           <Route path="careers" element={<AdminCareers />} />
+          <Route path="banners" element={<AdminBanners />} />
+          <Route path="offer-banner" element={<AdminOfferBanner />} />
         </Route>
 
         <Route path="*" element={<div className="p-24 text-center">Page not found</div>} />

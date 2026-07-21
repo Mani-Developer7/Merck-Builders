@@ -2,8 +2,9 @@ import { useEffect, useRef, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import gsap from 'gsap';
 import Counter from './Counter';
+import api from '../api/axios';
 
-const slides = [
+const FALLBACK_SLIDES = [
   {
     image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1920&auto=format&fit=crop',
     eyebrow: 'Sector 16-A · Shah Latif Town · Karachi',
@@ -41,14 +42,32 @@ const Hero = () => {
   const bgRefs = useRef([]);
   const contentRef = useRef(null);
   const navigate = useNavigate();
+  const [slides, setSlides] = useState(FALLBACK_SLIDES);
   const [index, setIndex] = useState(0);
   const [location, setLocation] = useState('');
   const [category, setCategory] = useState('');
   const timerRef = useRef(null);
 
-  const goTo = useCallback((next) => {
-    setIndex(((next % slides.length) + slides.length) % slides.length);
+  // Load banners managed from the admin dashboard; fall back to defaults if none exist
+  useEffect(() => {
+    api
+      .get('/banners', { params: { active: true } })
+      .then((res) => {
+        if (res.data && res.data.length > 0) {
+          bgRefs.current = [];
+          setSlides(res.data);
+          setIndex(0);
+        }
+      })
+      .catch(() => {});
   }, []);
+
+  const goTo = useCallback(
+    (next) => {
+      setIndex(((next % slides.length) + slides.length) % slides.length);
+    },
+    [slides.length]
+  );
 
   // Autoplay
   useEffect(() => {
@@ -68,7 +87,7 @@ const Hero = () => {
       { opacity: 0, y: 24 },
       { opacity: 1, y: 0, duration: 0.9, stagger: 0.1, ease: 'power3.out' }
     );
-  }, [index]);
+  }, [index, slides]);
 
   // Mouse parallax
   useEffect(() => {
@@ -93,7 +112,7 @@ const Hero = () => {
     navigate(`/projects?${params.toString()}`);
   };
 
-  const current = slides[index];
+  const current = slides[index] || slides[0] || FALLBACK_SLIDES[0];
 
   return (
     <section ref={heroRef} className="relative h-screen min-h-[640px] overflow-hidden bg-ink">
@@ -101,7 +120,7 @@ const Hero = () => {
       <div className="absolute inset-0 scale-110">
         {slides.map((s, i) => (
           <div
-            key={s.image}
+            key={s._id || s.image}
             ref={(el) => (bgRefs.current[i] = el)}
             className="absolute inset-0 bg-cover bg-center"
             style={{ backgroundImage: `url('${s.image}')`, opacity: i === index ? 1 : 0 }}
@@ -159,11 +178,11 @@ const Hero = () => {
           </button>
         </form>
 
-        {/* <div className="hero-fade grid grid-cols-3 gap-6 mt-12 max-w-md">
+        <div className="hero-fade grid grid-cols-3 gap-6 mt-12 max-w-md">
           <Counter end={1000} suffix="+" label="Homes Delivered" />
           <Counter end={500} suffix="+" label="Happy Clients" />
           <Counter end={10} suffix="+" label="Projects" />
-        </div> */}
+        </div>
       </div>
 
       {/* Slider controls */}

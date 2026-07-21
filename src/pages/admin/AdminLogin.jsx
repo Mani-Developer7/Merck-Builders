@@ -25,12 +25,10 @@ const AdminLogin = () => {
   };
 
   return (
-    <div className="min-h-screen bg-ink flex items-center justify-center px-6">
+    <div className="min-h-screen bg-gray-700 flex items-center justify-center px-6">
       <div className="w-full max-w-sm">
         <div className="text-center mb-8">
-          <span className="font-display text-3xl text-stone">
-            Marjan <span className="text-brass">Classic</span>
-          </span>
+          <img src="/logo.png" alt="" className="h-[120px] ml-[120px]"/>
           <p className="text-stone/50 text-xs uppercase tracking-widest mt-2">Admin Dashboard</p>
         </div>
 

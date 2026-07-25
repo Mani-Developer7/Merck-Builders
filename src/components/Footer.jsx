@@ -4,7 +4,7 @@ const Footer = () => (
   <footer className="bg-ink900 text-stone/80 border-t border-brass/20 mt-24">
     <div className="max-w-7xl mx-auto  py-14 grid gap-12 md:grid-cols-4">
       <div>
-        <img src="/logo.png" alt="" className="h-[120px]"/>
+        <img src="/logo.png" alt="" className="h-[120px]" />
         <p className="mt-2 text-sm leading-relaxed text-stone/60">
           Mall &amp; Residency — Sector 16-A, Shah Latif Town, Karachi. Building landmark
           mixed-use developments across the city.
@@ -26,7 +26,7 @@ const Footer = () => (
         <ul className="space-y-2 text-sm text-stone/70">
           <li>Sector 16-A, Shah Latif Town, Karachi</li>
           <li>+92 300 0000000</li>
-          <li>info@marjanclassic.com</li>
+          <li>merckgob@gmail.com</li>
         </ul>
       </div>
 

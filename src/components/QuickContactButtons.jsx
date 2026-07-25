@@ -1,5 +1,5 @@
 const WHATSAPP_NUMBER = '923162087483'; // update with the real WhatsApp business number (no + or spaces)
-const CONTACT_EMAIL = 'mannankhanzada844@gmail.com';
+const CONTACT_EMAIL = 'merckgob@gmail.com';
 
 const QuickContactButtons = () => (
   <div className="fixed bottom-24 right-6 z-40 flex flex-col gap-3">

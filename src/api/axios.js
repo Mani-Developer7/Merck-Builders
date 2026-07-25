@@ -9,9 +9,22 @@
 //
 // Default admin login: admin@marjanclassic.com / admin123
 // (change these in the DEFAULT_ADMIN object below)
+//
+// IMPORTANT — local image paths (e.g. '/FinalCloseup.jpeg'):
+// These only resolve if the actual file lives in `client/public/`, e.g.
+// client/public/FinalCloseup.jpeg. Vite serves everything inside `public/`
+// from the site root, so the path in code must match the filename exactly
+// (including capitalization and extension).
 // ---------------------------------------------------------------------------
 
 const DELAY = 250; // simulated network delay, ms
+
+// Bump this any time you change the seed data below (new image paths, new
+// sample content, etc). Seeding only ever writes to localStorage once per
+// version — without this, a browser that already loaded the site keeps
+// serving whatever was seeded the first time, and edits here appear to do
+// nothing. Changing this string forces a one-time refresh of the demo data.
+const SEED_VERSION = '2';
 
 const DEFAULT_ADMIN = { email: 'admin@marjanclassic.com', password: 'admin123', name: 'Admin' };
 
@@ -44,18 +57,31 @@ const fileToDataUrl = (file) =>
     reader.readAsDataURL(file);
   });
 
-// --- Seed data (only runs once, first time the app loads) -----------------
+// --- Seed data (only runs once per SEED_VERSION) ---------------------------
 
+// NOTE: IMG.mall below is missing a file extension ('/CompanyIntro' — no
+// .jpg/.jpeg/.png). That will 404 no matter what. Update it to match your
+// actual filename in client/public/, e.g. '/CompanyIntro.jpeg'.
 const IMG = {
-  tower: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1200&auto=format&fit=crop',
-  mall: 'https://images.unsplash.com/photo-1519567241046-7f570eee3ce6?q=80&w=1200&auto=format&fit=crop',
-  interior: 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=1200&auto=format&fit=crop',
-  lobby: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200&auto=format&fit=crop',
-  night: 'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?q=80&w=1200&auto=format&fit=crop',
-  site: 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?q=80&w=1200&auto=format&fit=crop',
+  tower: '/FinalCloseup.jpeg',
+  mall: '/CompanyIntro', // ← fix this: add the real file extension
+  interior: '/PASSAGE.jpeg',
+  lobby: '/RECEPTION.jpg.jpeg', // ← double-check this one too, looks like it may have an accidental double extension
+  night: '/LIFT.jpeg',
+  site: '/Upper.jpeg',
 };
 
 const seedIfEmpty = () => {
+  // Reseed whenever SEED_VERSION changes, so edits to IMG/content above
+  // actually show up instead of being shadowed by old localStorage data.
+  const storedVersion = localStorage.getItem('db_seed_version');
+  if (storedVersion !== SEED_VERSION) {
+    ['db_projects', 'db_blogs', 'db_gallery', 'db_careers', 'db_banners', 'db_offer'].forEach((k) =>
+      localStorage.removeItem(k)
+    );
+    localStorage.setItem('db_seed_version', SEED_VERSION);
+  }
+
   if (!localStorage.getItem('db_admin')) write('db_admin', DEFAULT_ADMIN);
 
   if (!localStorage.getItem('db_projects')) {
@@ -206,7 +232,7 @@ const seedIfEmpty = () => {
         title: 'Invest Today, Live Luxuriously with',
         highlight: 'Marjan Classic',
         text: 'Step into a world where smart investment meets elevated living — crafted for long-term value and a lifestyle you truly deserve.',
-        image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1920&auto=format&fit=crop',
+        image: IMG.tower,
         order: 1,
         active: true,
         createdAt: now,
@@ -217,7 +243,7 @@ const seedIfEmpty = () => {
         title: 'Find the Home You\u2019ve',
         highlight: 'Always Dreamed Of',
         text: 'Spaces designed for modern families, offering peace, convenience, and lasting satisfaction in the heart of Karachi.',
-        image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1920&auto=format&fit=crop',
+        image: IMG.lobby,
         order: 2,
         active: true,
         createdAt: now,
@@ -228,7 +254,7 @@ const seedIfEmpty = () => {
         title: 'A Landmark Address in',
         highlight: 'the Heart of Karachi',
         text: 'Where retail energy and residential calm share one address — thoughtfully planned to match the way you want to live.',
-        image: 'https://images.unsplash.com/photo-1519567241046-7f570eee3ce6?q=80&w=1920&auto=format&fit=crop',
+        image: IMG.mall,
         order: 3,
         active: true,
         createdAt: now,
@@ -239,7 +265,7 @@ const seedIfEmpty = () => {
         title: 'Step Into Your Perfect',
         highlight: 'Space With Us',
         text: 'Whether you\u2019re upgrading your lifestyle or securing your first investment, our projects deliver comfort, style, and lasting value.',
-        image: 'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?q=80&w=1920&auto=format&fit=crop',
+        image: IMG.night,
         order: 4,
         active: true,
         createdAt: now,
@@ -536,9 +562,6 @@ const api = {
     if (parts.length === 2 && collections[parts[0]]) {
       const item = getSingle(parts[0], parts[1]);
       if (!item) return fail('Not found', 404);
-      if (parts[0] === 'gallery') {
-        // populate nothing special, gallery has no project ref in this mock
-      }
       return ok(item);
     }
 
